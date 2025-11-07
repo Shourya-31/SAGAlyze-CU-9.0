@@ -56,7 +56,7 @@
             android:minHeight="150dp"
             android:padding="@dimen/spacing_lg">
 
-            <!-- ✅ Upload Prompt (Visible when no file) -->
+
             <LinearLayout
                 android:id="@+id/uploadPrompt"
                 android:layout_width="match_parent"
@@ -154,6 +154,7 @@
             </LinearLayout>
 
             <!-- ✅ File Selected View (hidden initially, appears after selection) -->
+            <!-- ✅ File Selected View (hidden initially, appears after selection) -->
             <LinearLayout
                 android:id="@+id/fileSelectedView"
                 android:layout_width="match_parent"
@@ -206,6 +207,21 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
             </LinearLayout>
 
+            <!-- ✅ AI Result Text -->
+            <TextView
+                android:id="@+id/tvAiResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/dark_green"
+                android:padding="12dp"
+                android:layout_marginBottom="@dimen/spacing_md"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+
         </FrameLayout>
 
 
@@ -242,6 +258,7 @@
                 android:inputType="textMultiLine"
                 android:minHeight="100dp" />
         </com.google.android.material.textfield.TextInputLayout>
+
 
 <!--        &lt;!&ndash; Treatment Recommendations Input &ndash;&gt;-->
 <!--        <com.google.android.material.textfield.TextInputLayout-->

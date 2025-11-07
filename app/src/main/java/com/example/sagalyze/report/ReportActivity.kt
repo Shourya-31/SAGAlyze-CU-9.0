@@ -35,6 +35,18 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import java.io.File
 import java.io.FileOutputStream
+import com.bumptech.glide.Glide
+import com.example.sagalyze.network.RetrofitClient
+import com.example.sagalyze.network.PredictionResponse
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import android.graphics.*
+import android.os.Environment
+import android.widget.Toast
 import java.util.*
 
 class ReportActivity : AppCompatActivity() {
@@ -70,20 +82,21 @@ class ReportActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val bitmap = result.data?.extras?.get("data") as Bitmap
-
-            // Save locally
-            capturedImageFile =File(cacheDir, "lesion_${System.currentTimeMillis()}.jpg")
+            capturedImageFile = File(cacheDir, "lesion_${System.currentTimeMillis()}.jpg")
             FileOutputStream(capturedImageFile!!).use {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
             }
 
-            // Show preview
             val includeNewReport = findViewById<View>(R.id.includeNewReport)
             val ivPreview = includeNewReport.findViewById<ImageView>(R.id.ivPreview)
             ivPreview.setImageBitmap(bitmap)
             ivPreview.visibility = View.VISIBLE
+
+            // ✅ Upload the image automatically
+            uploadImageToServer(Uri.fromFile(capturedImageFile))
         }
     }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,6 +160,89 @@ class ReportActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun generateReportPDF(
+        reportTitle: String,
+        patientName: String,
+        age: String,
+        gender: String,
+        disease: String,
+        bloodGroup: String,
+        clinicalFindings: String,
+        imageBitmap: Bitmap
+    ) {
+        val pdfDocument = PdfDocument()
+        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create() // A4 size
+        val page = pdfDocument.startPage(pageInfo)
+        val canvas = page.canvas
+
+        val paint = Paint()
+        val titlePaint = Paint().apply {
+            typeface = Typeface.create(Typeface.DEFAULT_BOLD, Typeface.BOLD)
+            textSize = 24f
+            color = Color.BLACK
+            textAlign = Paint.Align.CENTER
+        }
+
+        // 🏷 Report Title
+        canvas.drawText(reportTitle, (pageInfo.pageWidth / 2).toFloat(), 80f, titlePaint)
+
+        // 🧍 Patient Details
+        paint.textSize = 14f
+        paint.color = Color.DKGRAY
+        var yPos = 130f
+        val xStart = 60f
+
+        canvas.drawText("Patient Name: $patientName", xStart, yPos, paint)
+        yPos += 25
+        canvas.drawText("Age: $age    Gender: $gender", xStart, yPos, paint)
+        yPos += 25
+        canvas.drawText("Disease: $disease", xStart, yPos, paint)
+        yPos += 25
+        canvas.drawText("Blood Group: $bloodGroup", xStart, yPos, paint)
+
+        // 📸 Image
+        yPos += 40
+        val scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, 250, 250, false)
+        canvas.drawBitmap(scaledBitmap, xStart, yPos, paint)
+        yPos += 280
+
+        // 🧠 Clinical Findings
+        titlePaint.textAlign = Paint.Align.LEFT
+        titlePaint.textSize = 18f
+        canvas.drawText("Clinical Findings:", xStart, yPos, titlePaint)
+        yPos += 30
+
+        val textPaint = Paint().apply {
+            textSize = 14f
+            color = Color.BLACK
+        }
+
+        val textLines = clinicalFindings.chunked(80)
+        for (line in textLines) {
+            canvas.drawText(line, xStart, yPos, textPaint)
+            yPos += 20
+        }
+
+        pdfDocument.finishPage(page)
+
+        // 💾 Save file
+        val file = File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            "${reportTitle.replace(" ", "_")}_${System.currentTimeMillis()}.pdf"
+        )
+
+        try {
+            pdfDocument.writeTo(FileOutputStream(file))
+            Toast.makeText(this, "✅ Report saved to Downloads", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "❌ Failed to save PDF: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+
+        pdfDocument.close()
+    }
+
 
     private fun setupToolbar() {
         findViewById<View>(R.id.ivMenuButton).setOnClickListener {
@@ -335,6 +431,7 @@ class ReportActivity : AppCompatActivity() {
     }
 
 
+
     private fun openFilePicker() {
         val permission = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU)
             Manifest.permission.READ_MEDIA_IMAGES
@@ -357,7 +454,6 @@ class ReportActivity : AppCompatActivity() {
 
     private fun handleFileSelection(uri: Uri) {
         uploadedFileUri = uri
-
         val includeNewReport = findViewById<View>(R.id.includeNewReport)
         val uploadPrompt = includeNewReport.findViewById<View>(R.id.uploadPrompt)
         val fileSelectedView = includeNewReport.findViewById<View>(R.id.fileSelectedView)
@@ -370,7 +466,6 @@ class ReportActivity : AppCompatActivity() {
             if (cursor.moveToFirst()) {
                 val fileName = cursor.getString(nameIndex)
                 val fileSize = cursor.getLong(sizeIndex)
-
                 uploadPrompt.visibility = View.GONE
                 fileSelectedView.visibility = View.VISIBLE
                 tvFileName.text = fileName
@@ -379,7 +474,92 @@ class ReportActivity : AppCompatActivity() {
         }
 
         ToastHelper.showSuccess(this, "File selected successfully!")
+
+        // ✅ Automatically upload to AI model
+        uploadImageToServer(uri)
     }
+
+    private fun uploadImageToServer(uri: Uri) {
+        val includeNewReport = findViewById<View>(R.id.includeNewReport)
+        val tvResult = includeNewReport.findViewById<TextView>(R.id.tvAiResult)
+        val ivPreview = includeNewReport.findViewById<ImageView>(R.id.ivPreview)
+
+        tvResult.visibility = View.VISIBLE
+        tvResult.text = "⏳ Uploading image for AI analysis..."
+
+        // ✅ Step 1: Determine file path correctly (camera vs gallery)
+        val file: File? = when {
+            // Case 1: Captured via camera
+            capturedImageFile != null && uri.toString().contains("lesion_") -> capturedImageFile
+
+            // Case 2: Picked from gallery
+            else -> {
+                val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+                val cursor = contentResolver.query(uri, filePathColumn, null, null, null)
+                cursor?.moveToFirst()
+                val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
+                val picturePath = cursor?.getString(columnIndex ?: -1)
+                cursor?.close()
+                if (!picturePath.isNullOrEmpty()) File(picturePath) else null
+            }
+        }
+
+        if (file == null || !file.exists()) {
+            tvResult.text = "⚠️ Unable to get image path."
+            return
+        }
+
+        // ✅ Step 2: Prepare multipart request
+        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+        // ✅ Step 3: Make API call
+        val call = RetrofitClient.instance.uploadImage(body)
+        call.enqueue(object : Callback<PredictionResponse> {
+            override fun onResponse(
+                call: Call<PredictionResponse>,
+                response: Response<PredictionResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val res = response.body()
+                    if (res != null) {
+                        val resultTextBuilder = StringBuilder()
+                        resultTextBuilder.append("🎯 ${res.fine_label ?: "Unknown"} → ${res.unified_category ?: "N/A"}\n\n")
+
+                        // ✅ Handle results safely (since it's a list of lists)
+                        res.results?.forEachIndexed { index, result ->
+                            val disease = result.getOrNull(0)?.toString() ?: "Unknown"
+                            val confidence = result.getOrNull(1)?.toString() ?: "-"
+                            val description = result.getOrNull(2)?.toString() ?: ""
+                            resultTextBuilder.append("${index + 1}. $disease — $confidence% $description\n")
+                        }
+
+                        // ✅ Show the formatted predictions
+                        tvResult.text = resultTextBuilder.toString()
+
+                        // ✅ Load overlay image if available
+                        res.images?.overlay?.let { overlayUrl ->
+                            Glide.with(this@ReportActivity)
+                                .load(overlayUrl)
+                                .into(ivPreview)
+                        }
+                    } else {
+                        tvResult.text = "⚠️ Empty response from server."
+                    }
+                } else {
+                    tvResult.text = "⚠️ Server error: ${response.code()} - ${response.message()}"
+                }
+            }
+
+            override fun onFailure(call: Call<PredictionResponse>, t: Throwable) {
+                tvResult.text = "❌ Upload failed: ${t.localizedMessage ?: "Unknown error"}"
+            }
+
+        })
+    }
+
+
+
 
     private fun handleGenerateReport() {
         val reportTitle = findViewById<EditText>(R.id.etReportTitle)?.text?.toString() ?: ""
