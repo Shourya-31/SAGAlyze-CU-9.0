@@ -56,108 +56,158 @@
             android:minHeight="150dp"
             android:padding="@dimen/spacing_lg">
 
-            <!-- Upload Prompt (Visible when no file) -->
+            <!-- ✅ Upload Prompt (Visible when no file) -->
             <LinearLayout
                 android:id="@+id/uploadPrompt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:gravity="center">
 
-                <FrameLayout
-                    android:layout_width="@dimen/icon_size_xlarge"
-                    android:layout_height="@dimen/icon_size_xlarge"
-                    android:background="@color/background_main">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card_background_green"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/border_green"
+                    app:strokeWidth="2dp" />
+
+                <!-- Upload Lesion Photo Label -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upload_lesion_photo"
+                    android:textColor="@color/dark_green"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:drawableStart="@drawable/ic_upload"
+                    android:drawableTint="@color/light_green"
+                    android:drawablePadding="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Upload Photo Container -->
+                <!-- Upload Photo Container -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="32dp"
+                    android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/icon_size_large"
-                        android:layout_height="@dimen/icon_size_large"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/button_browse_files"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:src="@drawable/ic_upload"
-                        app:tint="@color/primary_green" />
-                </FrameLayout>
+                        app:tint="@color/light_green"
+                        android:layout_marginBottom="12dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_md"
-                    android:text="@string/drag_drop_text"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/text_size_normal" />
+                    <TextView
+                        android:id="@+id/tvFileName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tap_to_upload"
+                        android:textColor="@color/dark_green"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/file_format_text"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="@dimen/text_size_small" />
+                    <TextView
+                        android:id="@+id/tvFileSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/image_upload_info"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnBrowseFiles"
-                    style="@style/ButtonPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_md"
-                    android:drawableLeft="@drawable/ic_upload"
-                    android:drawablePadding="@dimen/spacing_sm"
-                    android:text="@string/button_browse_files" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnClickToUpload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Click to Upload"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_green"
+                        app:icon="@drawable/ic_click"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:strokeColor="@color/light_green"
+                        app:strokeWidth="1dp"
+                        app:cornerRadius="12dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <!-- ✅ Camera Preview (Initially Hidden) -->
+                    <ImageView
+                        android:id="@+id/ivPreview"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:layout_marginTop="16dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        android:background="@drawable/bg_preview_border"
+                        android:contentDescription="Preview" />
+
+                </LinearLayout>
             </LinearLayout>
 
-            <!-- File Selected View (Visible when file uploaded) -->
+            <!-- ✅ File Selected View (hidden initially, appears after selection) -->
             <LinearLayout
                 android:id="@+id/fileSelectedView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:padding="16dp"
+                android:background="@color/card_background_green">
 
-                <FrameLayout
-                    android:layout_width="@dimen/icon_size_xlarge"
-                    android:layout_height="@dimen/icon_size_xlarge"
-                    android:background="@drawable/bg_icon_circle">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_save"
+                    app:tint="@color/white"
+                    android:layout_marginEnd="12dp" />
 
-                    <ImageView
-                        android:layout_width="@dimen/icon_size_large"
-                        android:layout_height="@dimen/icon_size_large"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/label_upload_photo"
-                        android:src="@drawable/ic_image"
-                        app:tint="@color/primary_green" />
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/tvFileName"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_md"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/text_size_normal"
-                    tools:text="skin_lesion.jpg" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvFileSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="@dimen/text_size_small"
-                    tools:text="2.45 MB" />
+                    <TextView
+                        android:id="@+id/tvFileNameSelected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="File selected"
+                        android:textColor="@color/dark_green"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvFileSizeSelected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1.2 MB"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnRemoveFile"
-                    style="@style/ButtonOutline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_md"
-                    android:text="@string/button_remove_file" />
+                    android:text="Remove"
+                    android:textColor="@color/black"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="2dp"
+                    app:cornerRadius="8dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
             </LinearLayout>
 
         </FrameLayout>
+
 
         <!-- Report Title Input -->
         <com.google.android.material.textfield.TextInputLayout
@@ -172,7 +222,6 @@
                 android:id="@+id/etReportTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/report_title_hint"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,29 +239,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top|start"
-                android:hint="@string/clinical_findings_hint"
                 android:inputType="textMultiLine"
                 android:minHeight="100dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Treatment Recommendations Input -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilTreatmentRecommendations"
-            style="@style/InputStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_md"
-            android:hint="@string/label_treatment_recommendations">
+<!--        &lt;!&ndash; Treatment Recommendations Input &ndash;&gt;-->
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/tilTreatmentRecommendations"-->
+<!--            style="@style/InputStyle"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="@dimen/spacing_md"-->
+<!--            android:hint="@string/label_treatment_recommendations">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etTreatmentRecommendations"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top|start"
-                android:hint="@string/treatment_recommendations_hint"
-                android:inputType="textMultiLine"
-                android:minHeight="100dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/etTreatmentRecommendations"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="top|start"-->
+<!--                android:inputType="textMultiLine"-->
+<!--                android:minHeight="100dp" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <!-- Action Buttons -->
         <LinearLayout
@@ -249,7 +296,7 @@
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_download"
                 android:drawablePadding="@dimen/spacing_sm"
-                android:text="@string/button_download_pdf" />
+                android:text="Save PDF" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSendToPatient"

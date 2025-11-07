@@ -32,15 +32,29 @@ class PatientAdapter(
             }
 
             // 👁️ Eye icon click → open ReportActivity
+//            eyeIcon.setOnClickListener {
+//                val context = itemView.context
+//                val intent = Intent(context, ReportActivity::class.java).apply {
+//                    putExtra("PATIENT_ID", patient.id)
+//                    putExtra("PATIENT_NAME", patient.name)
+//                    putExtra("PATIENT_CONDITION", patient.condition)
+//                }
+//                context.startActivity(intent)
+//            }
             eyeIcon.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, ReportActivity::class.java).apply {
                     putExtra("PATIENT_ID", patient.id)
                     putExtra("PATIENT_NAME", patient.name)
                     putExtra("PATIENT_CONDITION", patient.condition)
+                    putExtra("PATIENT_AGE", patient.age)
+                    putExtra("PATIENT_GENDER", patient.gender)
+                    putExtra("PATIENT_BLOOD_GROUP", patient.bloodGroup)
+                    putExtra("PATIENT_ID", patient.id?.toString() ?: "N/A")
                 }
                 context.startActivity(intent)
             }
+
         }
     }
 

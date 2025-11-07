@@ -36,28 +36,28 @@
                 android:layout_margin="@dimen/spacing_xs" />
 
             <!-- Age -->
-            <include
-                layout="@layout/item_patient_detail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/spacing_xs" />
+<!--            <include-->
+<!--                layout="@layout/item_patient_detail"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_columnWeight="1"-->
+<!--                android:layout_margin="@dimen/spacing_xs" />-->
 
             <!-- Gender -->
-            <include
-                layout="@layout/item_patient_detail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/spacing_xs" />
+<!--            <include-->
+<!--                layout="@layout/item_patient_detail"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_columnWeight="1"-->
+<!--                android:layout_margin="@dimen/spacing_xs" />-->
 
             <!-- Phone Number -->
-            <include
-                layout="@layout/item_patient_detail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/spacing_xs" />
+<!--            <include-->
+<!--                layout="@layout/item_patient_detail"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_columnWeight="1"-->
+<!--                android:layout_margin="@dimen/spacing_xs" />-->
 
         </GridLayout>
 

@@ -36,12 +36,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var backgroundView: View
 
     private val allPatients = listOf(
-        Patient(1, "Sarah Mitchell", 34, "Female", "Psoriasis"),
-        Patient(2, "James Anderson", 42, "Male", "Eczema"),
-        Patient(3, "Emily Rodriguez", 28, "Female", "Acne Vulgaris"),
-        Patient(4, "Michael Chen", 55, "Male", "Melanoma Screening"),
-        Patient(5, "Lisa Thompson", 39, "Female", "Rosacea"),
-        Patient(6, "David Park", 47, "Male", "Dermatitis")
+        Patient(1, "Sarah Mitchell", 34, "Female", "Psoriasis", bloodGroup = "+O"),
+        Patient(2, "James Anderson", 42, "Male", "Eczema", bloodGroup = "+AB"),
+        Patient(3, "Emily Rodriguez", 28, "Female", "Acne Vulgaris", bloodGroup = "+B"),
+        Patient(4, "Michael Chen", 55, "Male", "Melanoma Screening", bloodGroup = "+A"),
+        Patient(5, "Lisa Thompson", 39, "Female", "Rosacea", bloodGroup = "+O"),
+        Patient(6, "David Park", 47, "Male", "Dermatitis", bloodGroup = "-B")
     )
 
     private var filteredPatients = allPatients.toMutableList()

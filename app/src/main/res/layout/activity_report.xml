@@ -156,7 +156,10 @@
                 <include layout="@layout/card_past_visits" />
 
                 <!-- New Report Card -->
-                <include layout="@layout/card_new_report" />
+
+                <include
+                    android:id="@+id/includeNewReport"
+                    layout="@layout/card_new_report" />
 
                 <!-- Action Buttons -->
                 <LinearLayout

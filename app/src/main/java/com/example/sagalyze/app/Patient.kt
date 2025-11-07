@@ -5,5 +5,6 @@ data class Patient(
     val name: String,
     val age: Int,
     val gender: String,
-    val condition: String
+    val condition: String,
+    val bloodGroup: String
 )

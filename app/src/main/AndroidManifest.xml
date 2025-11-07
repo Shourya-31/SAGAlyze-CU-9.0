@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sagalyze">
 
+    <!-- ✅ Camera Permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- ✅ Storage permission (for Android 12 and lower, needed for saving PDF) -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
     <application
         android:name="com.sagalyze.App"
         android:allowBackup="true"
@@ -12,6 +19,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SAGAlyze">
+
+        <!-- ✅ FileProvider required for sharing PDF -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <!-- Launcher -->
         <activity
@@ -25,8 +43,6 @@
             </intent-filter>
         </activity>
 
-
-        <!-- Keep MainActivity registered but NOT launcher -->
         <activity
             android:name="com.sagalyze.app.MainActivity"
             android:exported="true" />
@@ -40,7 +56,6 @@
             android:name="com.example.sagalyze.report.ReportActivity"
             android:exported="false"
             android:theme="@style/Theme.SAGAlyze" />
-
 
     </application>
 </manifest>
