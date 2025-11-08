@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Section Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Report Summary"
+        android:textColor="@color/jade_green_dark"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Summary Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="@color/summary_bg"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/jade_green_border"
+        app:strokeWidth="1dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:id="@+id/summaryActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/editSummaryButton"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_icon_button"
+                    android:contentDescription="Edit Summary"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/gray_600" />
+
+                <ImageButton
+                    android:id="@+id/regenerateSummaryButton"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_icon_button"
+                    android:contentDescription="Regenerate Summary"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_refresh"
+                    app:tint="@color/gray_600" />
+            </LinearLayout>
+
+            <!-- Summary Text -->
+            <TextView
+                android:id="@+id/summaryText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/summaryActions"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="80dp"
+                android:lineSpacingExtra="4dp"
+                android:text=""
+                android:textColor="@color/gray_700"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+</LinearLayout>

@@ -94,5 +94,51 @@
     <color name="ripple_color">#2E7D321A</color>
     <color name="shadow_color">#00000026</color>
 
+
+
+    <!-- Emerald Green Theme -->
+    <color name="jade_green">#10b981</color>
+    <color name="jade_green_dark">#059669</color>
+    <color name="jade_green_light">#34d399</color>
+    <color name="jade_green_lighter">#6ee7b7</color>
+    <color name="jade_green_lightest">#a7f3d0</color>
+    <color name="jade_green_light_button">#34d399</color>
+    <color name="jade_green_border">#10b98133</color>
+
+    <!-- Severity Colors -->
+    <color name="severity_low">#4CAF50</color>
+    <color name="severity_low_bg">#E8F5E9</color>
+    <color name="severity_low_text">#2E7D32</color>
+
+    <color name="severity_medium">#FFA726</color>
+    <color name="severity_medium_bg">#FFF8E1</color>
+    <color name="severity_medium_text">#F57C00</color>
+
+    <color name="severity_high">#F44336</color>
+    <color name="severity_high_bg">#FFEBEE</color>
+    <color name="severity_high_text">#C62828</color>
+
+    <!-- Backgrounds -->
+    <color name="bg_jade_light">#d1fae5</color>
+    <color name="bg_jade_lighter">#ecfdf5</color>
+    <color name="summary_bg">#f0fdf4</color>
+
+    <!-- Neutral Colors -->
+    <color name="gray_50">#F9FAFB</color>
+    <color name="gray_100">#F3F4F6</color>
+    <color name="gray_200">#E5E7EB</color>
+    <color name="gray_300">#D1D5DB</color>
+    <color name="gray_400">#9CA3AF</color>
+    <color name="gray_500">#6B7280</color>
+    <color name="gray_600">#4B5563</color>
+    <color name="gray_700">#374151</color>
+    <color name="gray_800">#1F2937</color>
+    <color name="gray_900">#111827</color>
+
+    <!-- Utility Colors -->
+    <color name="red_50">#FEF2F2</color>
+    <color name="red_500">#EF4444</color>
+    <color name="blue_500">#3B82F6</color>
+
 </resources>
 

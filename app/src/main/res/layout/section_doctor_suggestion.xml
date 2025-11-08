@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Section Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Doctor's Suggestion / Plan"
+            android:textColor="@color/jade_green_dark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/aiSuggestButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="AI Suggest"
+            android:textColor="@color/jade_green"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_sparkles"
+            app:iconTint="@color/jade_green"
+            app:strokeColor="@color/jade_green" />
+    </LinearLayout>
+
+    <!-- Notes Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/jade_green_border"
+        app:strokeWidth="2dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Write your personalized recommendations..."
+            app:boxBackgroundMode="none"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/doctorNotesEditText"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="@android:color/transparent"
+                android:gravity="top|start"
+                android:hint="Write your personalized recommendations, treatment guidance, or notes for the patient..."
+                android:textColorHint="@color/blue_500"
+                android:padding="16dp"
+                android:textColor="@color/gray_700"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+</LinearLayout>

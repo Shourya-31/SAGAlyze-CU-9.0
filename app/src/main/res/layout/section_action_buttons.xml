@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="16dp">
+
+    <!-- Save Plan Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/savePlanButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Save Plan"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:backgroundTint="@color/gradient_green"
+        app:cornerRadius="16dp"
+        app:elevation="8dp"
+        app:icon="@drawable/ic_save"
+        app:iconGravity="textStart" />
+
+    <!-- Share with Patient Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shareButton"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="12dp"
+        android:text="Share with Patient"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cornerRadius="16dp"
+        app:elevation="4dp"
+        app:icon="@drawable/ic_share"
+        app:backgroundTint="@color/gradient_green"
+        app:iconGravity="textStart"
+        app:iconTint="@color/blue_500"
+        app:strokeColor="@color/jade_green"
+        app:strokeWidth="2dp" />
+
+    <!-- Declare Patient Healed Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/declareHealedButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="12dp"
+        android:text="Declare Patient Healed"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:backgroundTint="@color/blue_500"
+        app:cornerRadius="16dp"
+        app:elevation="8dp"
+        app:icon="@drawable/ic_check_circle"
+        app:iconGravity="textStart" />
+</LinearLayout>

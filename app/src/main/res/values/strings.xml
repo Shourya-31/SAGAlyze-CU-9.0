@@ -178,4 +178,12 @@
 
     <string name="app_subtitle">Dermatology Assistant</string>
 
+
+    <!-- Treatment Types -->
+    <string-array name="treatment_types">
+        <item>💊 Medication</item>
+        <item>💚 Lifestyle Advice</item>
+        <item>📅 Follow-up</item>
+    </string-array>
+
 </resources>

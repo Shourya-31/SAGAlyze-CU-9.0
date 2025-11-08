@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import com.example.sagalyze.R
+import com.example.sagalyze.diagnostic.PlanActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
@@ -48,8 +49,20 @@ class AddPatientFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_add_patient, container, false)
+        val view = inflater.inflate(R.layout.fragment_add_patient, container, false)
+
+        val addDiagnosisButton =
+            view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_add_diagnosis_plan)
+
+        addDiagnosisButton?.setOnClickListener {
+            Toast.makeText(requireContext(), "Opening PlanActivity...", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), PlanActivity::class.java)
+            startActivity(intent)
+        }
+
+        return view
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -179,9 +192,17 @@ class AddPatientFragment : Fragment() {
     }
 
     private fun handleDiagnosisPlan() {
-        Toast.makeText(requireContext(), "Opening Diagnosis & Plan...", Toast.LENGTH_SHORT).show()
-        // Navigate to diagnosis and plan screen/dialog
+        Toast.makeText(requireContext(), "Button Clicked — opening activity...", Toast.LENGTH_SHORT).show()
+
+        try {
+            val intent = Intent(requireContext(), PlanActivity::class.java)
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "❌ Error: ${e.message}", Toast.LENGTH_LONG).show()
+            e.printStackTrace()
+        }
     }
+
 
     private fun savePatient() {
         // Validate inputs

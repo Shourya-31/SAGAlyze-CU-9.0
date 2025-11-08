@@ -1,0 +1,37 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Optional soft background glow -->
+    <path
+        android:pathData="M12,22C12,22,4,14.74,4,8.5C4,5.42,6.42,3,9.5,3
+            C11.24,3,12.91,3.81,14,5.08C15.09,3.81,16.76,3,18.5,3
+            C21.58,3,24,5.42,24,8.5C24,14.74,16,22,16,22H12z"
+        android:fillColor="#1AFF6F61"
+        android:fillAlpha="0.25" />
+
+    <!-- Main smooth curvy heart -->
+    <path
+        android:pathData="M12,21.35C10.55,20.03,8.8,18.44,7.05,16.72
+            C4.45,14.2,2,11.82,2,8.5C2,5.46,4.46,3,7.5,3
+            C9.24,3,10.91,3.81,12,5.09C13.09,3.81,14.76,3,16.5,3
+            C19.54,3,22,5.46,22,8.5C22,11.82,19.55,14.2,16.95,16.72
+            C15.2,18.44,13.45,20.03,12,21.35Z"
+        android:fillColor="#FF5E5E"
+        android:strokeColor="#FF4B4B"
+        android:strokeWidth="0.5"
+        android:strokeAlpha="0.3" />
+
+    <!-- Gentle highlight for depth -->
+    <path
+        android:pathData="M7.5,4.5C6.12,4.5,5,5.62,5,7
+            C5,9.89,8.1,12.65,12,16.28
+            C15.9,12.65,19,9.89,19,7
+            C19,5.62,17.88,4.5,16.5,4.5
+            C15.3,4.5,14.18,5.22,13.68,6.3H10.32
+            C9.82,5.22,8.7,4.5,7.5,4.5Z"
+        android:fillColor="#FFFFFFFF"
+        android:fillAlpha="0.22" />
+</vector>
