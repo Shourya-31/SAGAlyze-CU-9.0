@@ -1,2 +1,2 @@
 # SAGAlyze-CU
-Skin Disease Detector for Clinicians
+AI Skin Disease Detector for Clinicians
